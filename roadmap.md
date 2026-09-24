@@ -1,4 +1,4 @@
-- [ ] Create Evia Invites pages with the Evia Presence visual identity and template previews.
-- [ ] Build a seven-step invitation request form with media, RSVP, and package selections.
-- [ ] Save submitted requests and uploaded media privately in Lovable Cloud.
+- [x] Create Evia Invites pages with the Evia Presence visual identity and template previews.
+- [x] Build a seven-step invitation request form with media, RSVP, and package selections.
+- [ ] Verify private media upload with a request submission.
 - [ ] Verify desktop/mobile layout and form submission.
