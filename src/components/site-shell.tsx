@@ -14,7 +14,7 @@ const socials = [
 ] as const;
 
 function MusicNoteIcon({ className }: { className?: string }) {
-  return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true"><path d="M9 18V5l10-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="16" cy="16" r="3"/></svg>;
+  return <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true"><path d="M14.7 3h3.05c.22 1.7 1.15 2.85 2.8 3.5v3.12c-1.32-.05-2.58-.48-3.62-1.22v7.02c0 3.2-2.23 5.58-5.43 5.58-2.73 0-4.9-1.92-4.9-4.48 0-2.82 2.42-4.7 5.35-4.7.38 0 .77.04 1.13.12v3.05a3.35 3.35 0 0 0-1.02-.17c-1.16 0-2.16.62-2.16 1.72 0 .87.71 1.48 1.7 1.48 1.3 0 2.1-.92 2.1-2.55V3Z" /></svg>;
 }
 
 export function Brand({ light = false }: { light?: boolean }) {
