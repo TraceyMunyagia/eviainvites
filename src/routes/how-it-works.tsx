@@ -1,0 +1,9 @@
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { ArrowRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { FinalCta, PageIntro } from "@/components/invite-parts";
+import { steps } from "@/lib/invites";
+export const Route = createFileRoute("/how-it-works")({ head: () => ({ meta: [
+  { title: "How It Works — Evia Invites" }, { name: "description", content: "Choose a template, submit event details, let Evia design, share your link and track RSVPs." }, { property: "og:title", content: "How It Works — Evia Invites" }, { property: "og:description", content: "From first details to event-day check-in, discover the Evia invitation process." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" },
+] }), component: HowItWorks });
+function HowItWorks() { return <><PageIntro kicker="THE PROCESS" title="From your first idea to their first hello." text="A straightforward journey to a truly personal invitation."/><section className="py-18 md:py-24"><div className="section-shell">{steps.map((step, i) => <article key={step.title} className="grid gap-4 border-t border-border py-8 md:grid-cols-[100px_1fr_1fr] md:items-start md:py-12"><span className="font-display text-3xl text-gold">0{i + 1}</span><h2 className="font-display text-4xl text-primary md:text-5xl">{step.title}</h2><p className="max-w-md text-base leading-8 text-muted-foreground">{step.body}</p></article>)}<div className="border-t border-border pt-10"><Button asChild size="lg"><Link to="/create">Start your invitation <ArrowRight/></Link></Button></div></div></section><FinalCta/></> }
