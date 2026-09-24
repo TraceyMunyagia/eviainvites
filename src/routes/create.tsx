@@ -6,7 +6,7 @@ import { eventTypes, packages, templates } from "@/lib/invites";
 import { submitInvitation } from "@/lib/invitation.functions";
 
 export const Route = createFileRoute("/create")({
-  validateSearch: (search: Record<string, unknown>) => ({ event: typeof search.event === "string" ? search.event : "", template: typeof search.template === "string" ? search.template : "", package: typeof search.package === "string" ? search.package : "" }),
+  validateSearch: (search: Record<string, unknown>): { event?: string; template?: string; package?: string } => ({ ...(typeof search["event"] === "string" ? { event: search["event"] } : {}), ...(typeof search["template"] === "string" ? { template: search["template"] } : {}), ...(typeof search["package"] === "string" ? { package: search["package"] } : {}) }),
   head: () => ({ meta: [
     { title: "Create Your Invitation — Evia Invites" }, { name: "description", content: "Tell Evia about your celebration, choose a template and package, and send your invitation design request." }, { property: "og:title", content: "Create Your Invitation — Evia Invites" }, { property: "og:description", content: "Begin your personalized digital invitation with Evia." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" },
   ] }), component: Create,
