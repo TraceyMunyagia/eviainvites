@@ -14,7 +14,78 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      invitation_requests: {
+        Row: {
+          address: string | null
+          client_email: string
+          client_name: string
+          client_phone: string
+          created_at: string
+          description: string | null
+          dress_code: string | null
+          event_date: string
+          event_name: string
+          event_time: string
+          event_type: string
+          host_name: string
+          id: string
+          maps_url: string | null
+          media_paths: Json
+          package: string
+          rsvp_settings: Json
+          schedule: string | null
+          status: string
+          template: string
+          venue: string
+        }
+        Insert: {
+          address?: string | null
+          client_email: string
+          client_name: string
+          client_phone: string
+          created_at?: string
+          description?: string | null
+          dress_code?: string | null
+          event_date: string
+          event_name: string
+          event_time: string
+          event_type: string
+          host_name: string
+          id?: string
+          maps_url?: string | null
+          media_paths?: Json
+          package: string
+          rsvp_settings?: Json
+          schedule?: string | null
+          status?: string
+          template: string
+          venue: string
+        }
+        Update: {
+          address?: string | null
+          client_email?: string
+          client_name?: string
+          client_phone?: string
+          created_at?: string
+          description?: string | null
+          dress_code?: string | null
+          event_date?: string
+          event_name?: string
+          event_time?: string
+          event_type?: string
+          host_name?: string
+          id?: string
+          maps_url?: string | null
+          media_paths?: Json
+          package?: string
+          rsvp_settings?: Json
+          schedule?: string | null
+          status?: string
+          template?: string
+          venue?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
