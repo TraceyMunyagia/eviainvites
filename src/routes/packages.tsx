@@ -1,0 +1,6 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { FinalCta, PackageGrid, PageIntro } from "@/components/invite-parts";
+export const Route = createFileRoute("/packages")({ head: () => ({ meta: [
+  { title: "Invitation Packages & Pricing — Evia Invites" }, { name: "description", content: "Explore Essential at KES 2,000, Signature at KES 3,500 and Experience from KES 6,000." }, { property: "og:title", content: "Invitation Packages & Pricing — Evia Invites" }, { property: "og:description", content: "Choose the right digital invitation package for your celebration." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" },
+] }), component: Packages });
+function Packages() { return <><PageIntro kicker="THE PACKAGES" title="Every celebration has its own kind of magic." text="Choose a starting point that fits your occasion. Every invitation is personalized by Evia."/><section className="py-18 md:py-24"><div className="section-shell"><PackageGrid/><p className="mx-auto mt-10 max-w-2xl text-center text-sm leading-7 text-muted-foreground">For large events, Experience pricing is tailored to your guest count and the complexity of your celebration.</p></div></section><FinalCta/></> }
