@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CreateRouteImport } from './routes/create'
 import { Route as HowItWorksRouteImport } from './routes/how-it-works'
 import { Route as OccasionsRouteImport } from './routes/occasions'
 import { Route as PackagesRouteImport } from './routes/packages'
@@ -18,6 +19,11 @@ import { Route as TemplatesRouteImport } from './routes/templates'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CreateRoute = CreateRouteImport.update({
+  id: '/create',
+  path: '/create',
   getParentRoute: () => rootRouteImport,
 } as any)
 const HowItWorksRoute = HowItWorksRouteImport.update({
@@ -43,6 +49,7 @@ const TemplatesRoute = TemplatesRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/create': typeof CreateRoute
   '/how-it-works': typeof HowItWorksRoute
   '/occasions': typeof OccasionsRoute
   '/packages': typeof PackagesRoute
@@ -50,6 +57,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/create': typeof CreateRoute
   '/how-it-works': typeof HowItWorksRoute
   '/occasions': typeof OccasionsRoute
   '/packages': typeof PackagesRoute
@@ -58,6 +66,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/create': typeof CreateRoute
   '/how-it-works': typeof HowItWorksRoute
   '/occasions': typeof OccasionsRoute
   '/packages': typeof PackagesRoute
@@ -65,12 +74,25 @@ export interface FileRoutesById {
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/how-it-works' | '/occasions' | '/packages' | '/templates'
+  fullPaths:
+    | '/'
+    | '/create'
+    | '/how-it-works'
+    | '/occasions'
+    | '/packages'
+    | '/templates'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/how-it-works' | '/occasions' | '/packages' | '/templates'
+  to:
+    | '/'
+    | '/create'
+    | '/how-it-works'
+    | '/occasions'
+    | '/packages'
+    | '/templates'
   id:
     | '__root__'
     | '/'
+    | '/create'
     | '/how-it-works'
     | '/occasions'
     | '/packages'
@@ -79,6 +101,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CreateRoute: typeof CreateRoute
   HowItWorksRoute: typeof HowItWorksRoute
   OccasionsRoute: typeof OccasionsRoute
   PackagesRoute: typeof PackagesRoute
@@ -92,6 +115,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/create': {
+      id: '/create'
+      path: '/create'
+      fullPath: '/create'
+      preLoaderRoute: typeof CreateRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/how-it-works': {
@@ -127,6 +157,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CreateRoute: CreateRoute,
   HowItWorksRoute: HowItWorksRoute,
   OccasionsRoute: OccasionsRoute,
   PackagesRoute: PackagesRoute,
