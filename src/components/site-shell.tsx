@@ -1,11 +1,21 @@
 import { Link } from "@tanstack/react-router";
-import { ArrowUpRight, Menu, X } from "lucide-react";
+import { ArrowUpRight, Facebook, Instagram, Mail, Menu, Phone, X } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 
 const nav = [
-  ["/templates", "Templates"], ["/occasions", "Occasions"], ["/packages", "Packages"], ["/how-it-works", "How it works"],
+  ["/templates", "Templates"], ["/occasions", "Occasions"], ["/packages", "Packages"], ["/how-it-works", "How it works"], ["/contact", "Contact"],
 ] as const;
+
+const socials = [
+  { label: "Instagram", href: "https://www.instagram.com/eviainvites?stkn=OWk4ZHJvb21mYWg0", icon: Instagram },
+  { label: "TikTok", href: "https://www.tiktok.com/@eviainvites?_r=1&_t=ZS-99zu7cZLzlt", icon: MusicNoteIcon },
+  { label: "Facebook", href: "https://www.facebook.com/share/1HrzZvgC5S/?mibextid=wwXIfr", icon: Facebook },
+] as const;
+
+function MusicNoteIcon({ className }: { className?: string }) {
+  return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true"><path d="M9 18V5l10-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="16" cy="16" r="3"/></svg>;
+}
 
 export function Brand({ light = false }: { light?: boolean }) {
   return <Link to="/" aria-label="Evia Invites home" className={`group inline-flex items-baseline gap-2 font-display text-[2rem] leading-none ${light ? "text-primary-foreground" : "text-primary"}`}><span className="tracking-[0.17em]">EVIA</span><span className={`font-sans text-[0.55rem] font-bold uppercase tracking-[0.22em] ${light ? "text-gold" : "text-muted-foreground"}`}>INVITES</span></Link>;
@@ -24,5 +34,5 @@ export function SiteHeader() {
 }
 
 export function SiteFooter() {
-  return <footer className="bg-primary text-primary-foreground"><div className="section-shell grid gap-12 py-16 md:grid-cols-[1.6fr_1fr_1fr] md:py-20"><div><Brand light /><p className="mt-6 max-w-sm text-sm leading-7 text-primary-foreground/70">For the moments worth gathering for. Thoughtfully designed digital invitations, made personal by Evia.</p></div><div><p className="editorial-label text-gold">Explore</p><div className="mt-5 flex flex-col gap-3 text-sm text-primary-foreground/75"><Link to="/templates" className="hover:text-gold">Templates</Link><Link to="/occasions" className="hover:text-gold">Occasions</Link><Link to="/packages" className="hover:text-gold">Packages</Link><Link to="/how-it-works" className="hover:text-gold">How it works</Link></div></div><div><p className="editorial-label text-gold">Your celebration starts here</p><p className="mt-5 text-sm leading-7 text-primary-foreground/75">A wedding, a birthday, or just because. We'd love to make it memorable.</p><Button variant="gold" asChild className="mt-5"><Link to="/create">Get started <ArrowUpRight /></Link></Button></div></div><div className="border-t border-primary-foreground/15"><div className="section-shell flex flex-wrap items-center justify-between gap-3 py-5 text-xs text-primary-foreground/55"><span>© {new Date().getFullYear()} Evia Invites</span><span>Made for moments that matter.</span></div></div></footer>;
+  return <footer className="bg-primary text-primary-foreground"><div className="section-shell grid gap-12 py-16 md:grid-cols-[1.35fr_0.8fr_1.1fr] md:py-20"><div><Brand light /><p className="mt-6 max-w-sm text-sm leading-7 text-primary-foreground/70">For the moments worth gathering for. Thoughtfully designed digital invitations, made personal by Evia.</p><div className="mt-7 flex items-center gap-3"><p className="sr-only">Follow Evia Invites</p>{socials.map(({ label, href, icon: Icon }) => <a key={label} href={href} target="_blank" rel="noreferrer" aria-label={`Follow Evia Invites on ${label}`} className="flex size-10 items-center justify-center rounded-full border border-primary-foreground/25 text-primary-foreground/80 transition-colors hover:border-gold hover:text-gold"><Icon className="size-4" /></a>)}</div></div><div><p className="editorial-label text-gold">Explore</p><div className="mt-5 flex flex-col gap-3 text-sm text-primary-foreground/75"><Link to="/templates" className="hover:text-gold">Templates</Link><Link to="/occasions" className="hover:text-gold">Occasions</Link><Link to="/packages" className="hover:text-gold">Packages</Link><Link to="/how-it-works" className="hover:text-gold">How it works</Link><Link to="/contact" className="hover:text-gold">Contact us</Link></div></div><div><p className="editorial-label text-gold">Your celebration starts here</p><p className="mt-5 text-sm leading-7 text-primary-foreground/75">A wedding, a birthday, or just because. We'd love to make it memorable.</p><div className="mt-5 flex flex-col gap-3 text-sm text-primary-foreground/80"><a href="mailto:eviawke@gmail.com" className="inline-flex items-center gap-3 hover:text-gold"><Mail className="size-4 text-gold" />eviawke@gmail.com</a><a href="tel:+254759976682" className="inline-flex items-center gap-3 hover:text-gold"><Phone className="size-4 text-gold" />+254 759 976 682</a></div><Button variant="gold" asChild className="mt-6"><Link to="/create">Get started <ArrowUpRight /></Link></Button></div></div><div className="border-t border-primary-foreground/15"><div className="section-shell flex flex-wrap items-center justify-between gap-3 py-5 text-xs text-primary-foreground/55"><span>© {new Date().getFullYear()} Evia Invites</span><span>Made for moments that matter.</span></div></div></footer>;
 }
