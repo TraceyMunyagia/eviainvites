@@ -33,7 +33,7 @@ function Field({ label, required, children }: { label: string; required?: boolea
 function Create() {
   const search = Route.useSearch();
   const [step, setStep] = useState(0);
-  const [data, setData] = useState<Data>({ eventType: eventTypes.includes(search.event) ? search.event : "", template: templates.some(t => t.name === search.template) ? search.template : "", eventName: "", hostName: "", eventDate: "", eventTime: "", venue: "", address: "", mapsUrl: "", dressCode: "", description: "", schedule: "", rsvpEnabled: true, deadline: "", fields: ["Full name", "Phone", "Email", "Number of guests"], plusOne: false, customQuestions: "", package: packages.some(p => p.name === search.package) ? search.package : "Signature", clientName: "", clientPhone: "", clientEmail: "" });
+  const [data, setData] = useState<Data>({ eventType: eventTypes.includes(search.event ?? "") ? search.event ?? "" : "", template: templates.some(t => t.name === search.template) ? search.template ?? "" : "", eventName: "", hostName: "", eventDate: "", eventTime: "", venue: "", address: "", mapsUrl: "", dressCode: "", description: "", schedule: "", rsvpEnabled: true, deadline: "", fields: ["Full name", "Phone", "Email", "Number of guests"], plusOne: false, customQuestions: "", package: packages.some(p => p.name === search.package) ? search.package ?? "Signature" : "Signature", clientName: "", clientPhone: "", clientEmail: "" });
   const [files, setFiles] = useState<Record<FileGroup, File[]>>({ cover: [], gallery: [], logo: [], graphics: [], music: [] });
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
