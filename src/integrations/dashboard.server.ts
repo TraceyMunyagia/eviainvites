@@ -5,8 +5,8 @@ let client: ReturnType<typeof createClient> | undefined;
 function getDashboardAdmin() {
   if (client) return client;
 
-  const url = process.env["EVIAKE_SUPABASE_URL"];
-  const serviceRoleKey = process.env["EVIAKE_SUPABASE_SERVICE_ROLE_KEY"];
+  const url = process.env["EVIAKE_SUPABASE_URL"] || process.env["SUPABASE_URL"];
+  const serviceRoleKey = process.env["EVIAKE_SUPABASE_SERVICE_ROLE_KEY"] || process.env["SUPABASE_SERVICE_ROLE_KEY"];
   if (!url || !serviceRoleKey) {
     throw new Error("The Evia Invites dashboard connection is not configured.");
   }
