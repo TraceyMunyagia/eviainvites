@@ -2,16 +2,33 @@ import { createClient } from "@supabase/supabase-js";
 
 let client: ReturnType<typeof createClient> | undefined;
 
-function getDashboardAdmin() {
+function createSupabaseFetch(key: string): typeof fetch {
+  return (input, init) => {
+    const headers = new Headers(init?.headers);
+    if ((key.startsWith("sb_publishable_") || key.startsWith("sb_secret_")) && headers.get("Authorization") === `Bearer ${key}`) {
+      headers.delete("Authorization");
+    }
+    headers.set("apikey", key);
+    return fetch(input, { ...init, headers });
+  };
+}
+
+function getDashboardClient() {
   if (client) return client;
 
-  const url = process.env["EVIAKE_SUPABASE_URL"] || process.env["SUPABASE_URL"];
-  const serviceRoleKey = process.env["EVIAKE_SUPABASE_SERVICE_ROLE_KEY"] || process.env["SUPABASE_SERVICE_ROLE_KEY"];
-  if (!url || !serviceRoleKey) {
-    throw new Error("The Evia Invites dashboard connection is not configured.");
+  const url = process.env["EVIAKE_SUPABASE_URL"] || process.env["SUPABASE_URL"] || import.meta.env.VITE_SUPABASE_URL;
+  const key = process.env["EVIAKE_SUPABASE_SERVICE_ROLE_KEY"] ||
+    process.env["SUPABASE_SERVICE_ROLE_KEY"] ||
+    process.env["SUPABASE_PUBLISHABLE_KEY"] ||
+    process.env["SUPABASE_ANON_KEY"] ||
+    import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY ||
+    import.meta.env.VITE_SUPABASE_ANON_KEY;
+  if (!url || !key) {
+    throw new Error("Supabase is not configured for invitation submissions.");
   }
 
-  client = createClient(url, serviceRoleKey, {
+  client = createClient(url, key, {
+    global: { fetch: createSupabaseFetch(key) },
     auth: { autoRefreshToken: false, persistSession: false },
   });
   return client;
@@ -44,49 +61,6 @@ export async function createInvitationOrder(input: {
   clientEmail: string;
   media: { name: string; category: string; path: string }[];
 }) {
-  const dashboard = getDashboardAdmin();
-  const { data: business, error: businessError } = await dashboard
-    .from("businesses")
-    .select("id")
-    .eq("slug", "evia_invites")
-    .single();
-  if (businessError || !business) throw new Error("Evia Invites business is not configured.");
-
-  const { data: existingOrder, error: existingError } = await dashboard
-    .from("orders")
-    .select("id")
-    .eq("source_request_id", input.requestId)
-    .maybeSingle();
-  if (existingError)
-    throw new Error("We couldn't check whether this request was already received.");
-  if (existingOrder) return existingOrder.id;
-
-  const email = input.clientEmail.trim().toLowerCase();
-  const { data: existingClient } = await dashboard
-    .from("clients")
-    .select("id")
-    .eq("business_id", business.id)
-    .eq("email", email)
-    .maybeSingle();
-
-  let clientId = existingClient?.id;
-  if (!clientId) {
-    const { data: newClient, error: clientError } = await dashboard
-      .from("clients")
-      .insert({
-        business_id: business.id,
-        name: input.clientName.trim(),
-        email,
-        phone: input.clientPhone.trim(),
-        notes: `Invitation request: ${input.eventName.trim()}`,
-      })
-      .select("id")
-      .single();
-    if (clientError || !newClient)
-      throw new Error("We couldn't create the invitation client record.");
-    clientId = newClient.id;
-  }
-
   const notes = [
     "Submitted from eviainvites.com",
     `Event: ${input.eventName}`,
@@ -102,24 +76,16 @@ export async function createInvitationOrder(input: {
   ]
     .filter(Boolean)
     .join("\n");
-  const packageTotals: Record<string, number> = {
-    Essential: 2000,
-    Signature: 3500,
-    Experience: 6000,
-  };
-
-  const { data: order, error: orderError } = await dashboard
-    .from("orders")
-    .insert({
-      business_id: business.id,
-      client_id: clientId,
-      status: "payment_pending",
-      package: input.package,
-      total_kes: packageTotals[input.package] ?? 0,
-      deadline: input.eventDate,
-      notes,
-      source_request_id: input.requestId,
-      invitation_details: {
+  const dashboard = getDashboardClient();
+  const { data: orderId, error } = await dashboard.rpc("submit_invitation", {
+    p_source_request_id: input.requestId,
+    p_name: input.clientName,
+    p_email: input.clientEmail,
+    p_phone: input.clientPhone,
+    p_package: input.package,
+    p_event_date: input.eventDate,
+    p_notes: notes,
+    p_details: {
         eventType: input.eventType,
         template: input.template,
         eventName: input.eventName,
@@ -134,10 +100,8 @@ export async function createInvitationOrder(input: {
         schedule: input.schedule,
         rsvp: input.rsvp,
         media: input.media,
-      },
-    })
-    .select("id")
-    .single();
-  if (orderError || !order) throw new Error("We couldn't add the invitation to the dashboard.");
-  return order.id;
+    },
+  });
+  if (error || !orderId) throw new Error(error?.message || "We couldn't add the invitation to the dashboard.");
+  return orderId as string;
 }
