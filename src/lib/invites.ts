@@ -1,6 +1,6 @@
-import editorial from "@/assets/editorial-event.jpg";
-import romance from "@/assets/romance-event.jpg";
-import celebration from "@/assets/celebration-event.jpg";
+import editorial from "@/assets/image1.png";
+import romance from "@/assets/image2.png";
+import celebration from "@/assets/image3.png";
 
 export const eventTypes = ["Wedding", "Graduation", "Birthday", "Baby shower", "Bridal shower", "Engagement", "Corporate event", "Concert", "Game night", "Party", "Other event"];
 
@@ -34,7 +34,7 @@ export const steps = [
 ];
 
 export const packages = [
-  { name: "Essential", price: "KES 2,000", intro: "For moments shared with your closest people.", features: ["Digital invitation", "3 master template options", "Custom colours & fonts", "Event details & photos", "Hosted invitation page", "Personalized invitation URL", "RSVP form & tracking", "Countdown", "Google Maps", "Basic QR code", "1 revision"], bestFor: "Birthdays, baby showers, game nights, small graduations & casual events" },
-  { name: "Signature", price: "KES 3,500", intro: "The complete invitation experience.", popular: true, features: ["Everything in Essential", "Advanced animations", "Multiple photo sections", "Background music", "Event schedule & dress code", "Custom RSVP questions", "Plus-one management", "Guest list management", "RSVP statistics", "Unique guest QR codes", "RSVP confirmation", "Guest list export", "2 revisions"], bestFor: "Weddings, graduations, birthdays, baby showers, bridal showers & corporate events" },
-  { name: "Experience", price: "From KES 6,000", intro: "For a celebration with every detail considered.", features: ["Everything in Signature", "Fully customized design", "Advanced custom animations", "Multiple sections or pages", "QR event check-in", "Live check-in dashboard", "Guest management", "Dietary requirements", "Event itinerary", "Digital guestbook", "Advanced gallery", "Guest analytics", "Custom domain or subdomain", "Priority support", "3 revisions"], bestFor: "Luxury weddings, large graduations, corporate events, concerts, launches & large parties" },
+  { name: "Essential", intro: "A clean, single-scroll invite for the details that matter.", features: ["Hero", "Message", "Details", "Dress Code", "Location", "Simple RSVP", "Closing"], bestFor: "Birthdays, baby showers, game nights, small graduations & casual events" },
+  { name: "Signature", intro: "Adds the narrative and visual layer to your invitation.", popular: true, features: ["Everything in Essential", "Countdown", "Schedule", "Gallery", "RSVP customization: party size, custom questions, deadline"], bestFor: "Weddings, graduations, birthdays, baby showers, bridal showers & corporate events" },
+  { name: "Experience", intro: "Adds the showcase and interactive layer for a richer guest experience.", features: ["Everything in Signature", "Video", "Guestbook", "QR guest passes + check-in (coming soon)"], bestFor: "Luxury weddings, large graduations, corporate events, concerts, launches & large parties" },
 ];
